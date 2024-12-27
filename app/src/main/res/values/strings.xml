@@ -2,4 +2,6 @@
     <string name="app_name">vx Player</string>
     <string name="all_videos">All Videos</string>
     <string name="all_folders">All Folders</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
