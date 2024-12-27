@@ -1,5 +1,6 @@
 package com.example.vxplayer
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,10 +9,12 @@ import com.example.vxplayer.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.mainView.setBackgroundColor(Color.GRAY)
+        binding.tvHello.text = "Hello Rehan"
     }
 }
