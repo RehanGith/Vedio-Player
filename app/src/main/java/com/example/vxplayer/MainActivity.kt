@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setTheme(R.style.coolNavTheme)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setFragment(VideosFragment())
         binding.buttonNav.setOnItemSelectedListener {
