@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.vxplayer.databinding.ActivityMainBinding
 
 
@@ -15,9 +16,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setFragment(VideosFragment())
         binding.buttonNav.setOnItemSelectedListener {
-            Toast.makeText(this@MainActivity, "Item Selected", Toast.LENGTH_SHORT).show()
+            when(it.itemId) {
+                R.id.allVideos -> setFragment(VideosFragment())
+                R.id.allFolders -> setFragment(FoldersFragment())
+            }
             return@setOnItemSelectedListener true
         }
     }
+    private fun setFragment(fragment: Fragment) {
+        var transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_layout, fragment)
+        transaction.disallowAddToBackStack()
+        transaction.commit()
+    }
+
 }
