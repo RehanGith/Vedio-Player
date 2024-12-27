@@ -2,6 +2,7 @@ package com.example.vxplayer
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,7 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.mainView.setBackgroundColor(Color.GRAY)
-        binding.tvHello.text = "Hello Rehan"
+        binding.buttonNav.setOnItemSelectedListener {
+            Toast.makeText(this@MainActivity, "Item Selected", Toast.LENGTH_SHORT).show()
+            return@setOnItemSelectedListener true
+        }
     }
 }
