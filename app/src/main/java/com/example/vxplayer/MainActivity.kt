@@ -17,7 +17,7 @@ import com.example.vxplayer.databinding.ActivityMainBinding
 const val REQUEST_CODE_FOR_WRITE = 17
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,9 +36,27 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+        binding.navView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.feedbackNav -> {
+                    Toast.makeText(this@MainActivity, "Feedback selected", Toast.LENGTH_SHORT).show() }
+                R.id.themesNav -> {
+                    Toast.makeText(this@MainActivity, "Themes Selected", Toast.LENGTH_SHORT).show()}
+                R.id.sortOrderNav -> {
+                    Toast.makeText(this@MainActivity, "Sort Order selected", Toast.LENGTH_SHORT).show()
+                }
+                R.id.aboutNav-> {
+                    Toast.makeText(this@MainActivity, "About selected", Toast.LENGTH_SHORT).show()
+                }
+                R.id.exitNav -> {
+                    Toast.makeText(this@MainActivity, "Exit selected", Toast.LENGTH_SHORT).show()
+                }
+            }
+            return@setNavigationItemSelectedListener true
+        }
     }
     private fun setFragment(fragment: Fragment) {
-        var transaction = supportFragmentManager.beginTransaction()
+        val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_layout, fragment)
         transaction.disallowAddToBackStack()
         transaction.commit()
@@ -63,7 +81,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)) {
-            Toast.makeText(this, "You have selected option", Toast.LENGTH_SHORT).show()
             return true
         }
         return super.onOptionsItemSelected(item)

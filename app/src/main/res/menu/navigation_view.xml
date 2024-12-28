@@ -11,7 +11,7 @@
         android:title="@string/sort_order" />
     <item
         android:id="@+id/aboutNav"
-        android:title="@string/all_videos" />
+        android:title="@string/about" />
     <item
         android:id="@+id/exitNav"
         android:title="@string/exit" />
