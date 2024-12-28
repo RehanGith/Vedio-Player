@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginTop="60dp"
+    android:background="@color/cool_pink">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/vedio_player_launcher"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textMargin"
+        android:textStyle="bold"
+        android:text="@string/welcome_to"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textMargin"
+        android:text="@string/world_of_entertainment"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>
