@@ -21,6 +21,7 @@ class VideosFragment : Fragment() {
         binding.rvView.setHasFixedSize(true)
         binding.rvView.layoutManager = LinearLayoutManager(requireContext())
         binding.rvView.adapter = VideoAdapter(requireContext(), MainActivity.videoLIst)
+        binding.tvTotalVideos.text = "Total Videos: ${MainActivity.videoLIst.size}"
         return view
     }
 }
