@@ -22,15 +22,18 @@ const val REQUEST_CODE_FOR_WRITE = 17
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var toggle: ActionBarDrawerToggle
+    companion object{
+        lateinit var videoLIst: ArrayList<Video>
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setTheme(R.style.coolNavTheme)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         if(requestRuntimePermission()) {
-            Toast.makeText(this@MainActivity, "Read Permission granted", Toast.LENGTH_SHORT).show()
+            videoLIst = getAllVideos()
+            setFragment(VideosFragment())
         }
-        setFragment(VideosFragment())
         toggle = ActionBarDrawerToggle(this@MainActivity, binding.drawerLayour, R.string.open, R.string.close)
         binding.drawerLayour.addDrawerListener(toggle)
         toggle.syncState()
