@@ -1,20 +1,26 @@
 package com.example.vxplayer
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.vxplayer.databinding.ActivityFoldersBinding
 
 class FoldersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.coolNavTheme)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_folders)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        val binding = ActivityFoldersBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val position = intent.getIntExtra("position", 0)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title  = MainActivity.folderList[position].folder
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return true
     }
 }
