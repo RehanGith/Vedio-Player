@@ -16,14 +16,10 @@ class FoldersFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_folders, container, false)
         val binding = FragmentFoldersBinding.bind(view)
-        val tempList = ArrayList<String>()
-        tempList.add("First folder")
-        tempList.add("Second folder")
-        tempList.add("Third folder")
         binding.rvFolderView.setHasFixedSize(true)
         binding.rvFolderView.setItemViewCacheSize(10)
         binding.rvFolderView.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvFolderView.adapter = FolderAdapter(requireContext(), tempList )
+        binding.rvFolderView.adapter = FolderAdapter(requireContext(), MainActivity.folderList)
         return view
     }
 

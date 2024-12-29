@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var videoLIst: ArrayList<Video>
+        lateinit var folderList: ArrayList<Folder>
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.coolNavTheme)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         if (requestRuntimePermission()) {
+            folderList = ArrayList()
             videoLIst = getAllVideos()
             setFragment(VideosFragment())
         }
@@ -132,11 +134,13 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("Recycle", "Range")
     private fun getAllVideos(): ArrayList<Video> {
         val tempList = ArrayList<Video>()
+        val tempFolderList = ArrayList<String>()
         val projection = arrayOf(
             MediaStore.Video.Media.TITLE,
             MediaStore.Video.Media.SIZE,
             MediaStore.Video.Media._ID,
             MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
+            MediaStore.Video.Media.BUCKET_ID,
             MediaStore.Video.Media.DATA,
             MediaStore.Video.Media.DATE_ADDED,
             MediaStore.Video.Media.DURATION
@@ -156,6 +160,7 @@ class MainActivity : AppCompatActivity() {
                     val pathC = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
                     val folderNameC =
                         cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.BUCKET_DISPLAY_NAME))
+                        val folderIdC=  cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.BUCKET_ID))
                     val sizeC = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE))
                     try {
                         val file = File(pathC)
@@ -171,6 +176,12 @@ class MainActivity : AppCompatActivity() {
                         )
                         if (file.exists())
                             tempList.add(video)
+                        // For adding folder
+                        val folderD = Folder(id = folderIdC, folder = folderNameC)
+                        if(!tempFolderList.contains(folderNameC)){
+                            tempFolderList.add(folderNameC)
+                            folderList.add(folderD)
+                        }
                     } catch (_: Exception) {
                     }
 

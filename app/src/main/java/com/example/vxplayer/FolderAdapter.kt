@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vxplayer.databinding.FolderViewBinding
 
-class FolderAdapter(private val context: Context, private var folderList: ArrayList<String>):
+class FolderAdapter(private val context: Context, private var folderList: ArrayList<Folder>):
     RecyclerView.Adapter<FolderAdapter.FolderHolder>() {
     class FolderHolder(binding: FolderViewBinding): RecyclerView.ViewHolder(binding.root) {
         val title = binding.folderName
@@ -17,7 +17,7 @@ class FolderAdapter(private val context: Context, private var folderList: ArrayL
     }
 
     override fun onBindViewHolder(holder: FolderHolder, position: Int) {
-        holder.title.text = folderList[position]
+        holder.title.text = folderList[position].folder
     }
 
     override fun getItemCount(): Int {
