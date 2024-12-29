@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="@dimen/bottom_margin"
+    android:padding="2dp">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/video_location"
+        android:src="@drawable/all_folders_icon"
+        android:tint="@color/cool_pink" />
+    <TextView
+        android:id="@+id/folderName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/bottom_margin"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/folder_name"/>
+
+</LinearLayout>
+</layout>
