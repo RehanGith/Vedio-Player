@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vxplayer.databinding.FolderViewBinding
 
-class FolderAdapter(private val context: Context, private val folderList: ArrayList<String>):
+class FolderAdapter(private val context: Context, private var folderList: ArrayList<String>):
     RecyclerView.Adapter<FolderAdapter.FolderHolder>() {
     class FolderHolder(binding: FolderViewBinding): RecyclerView.ViewHolder(binding.root) {
         val title = binding.folderName
