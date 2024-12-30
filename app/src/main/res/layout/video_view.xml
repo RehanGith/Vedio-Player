@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:background="?attr/selectableItemBackground"
-    android:layout_marginBottom="@dimen/bottom_margin"
+    android:layout_marginBottom="@dimen/textMargin"
     android:padding="2dp">
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"

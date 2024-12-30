@@ -18,6 +18,9 @@
         android:theme="@style/Base.Theme.VxPlayer"
         tools:targetApi="31">
         <activity
+            android:name=".VideoPlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".FoldersActivity"
             android:exported="false" />
         <activity

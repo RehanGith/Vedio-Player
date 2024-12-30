@@ -39,7 +39,8 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.androidx.exoplayer.core)
+    implementation(libs.androidx.exoplayer.ui)
     implementation(libs.androidx.core.ktx)
     implementation(libs.github.glide)
     implementation(libs.androidx.appcompat)
