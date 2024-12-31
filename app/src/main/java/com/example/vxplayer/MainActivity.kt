@@ -1,6 +1,9 @@
 package com.example.vxplayer
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_AUDIO
+import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.Manifest.permission.READ_MEDIA_VIDEO
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -22,7 +25,7 @@ const val REQUEST_CODE_FOR_WRITE = 17
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var toggle: ActionBarDrawerToggle
-
+    private lateinit var permission: Array<String>
     companion object {
         lateinit var videoLIst: ArrayList<Video>
         lateinit var folderList: ArrayList<Folder>
@@ -33,7 +36,14 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setTheme(R.style.coolNavTheme)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        permission = if(android.os.Build.VERSION.SDK_INT >= 33) {
+            arrayOf(READ_MEDIA_VIDEO, READ_MEDIA_IMAGES, READ_MEDIA_AUDIO)
+
+        } else {
+            arrayOf(READ_EXTERNAL_STORAGE)
+        }
         if (requestRuntimePermission()) {
+            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
             folderList = ArrayList()
             videoLIst = getAllVideos()
             setFragment(VideosFragment())
@@ -92,12 +102,12 @@ class MainActivity : AppCompatActivity() {
     private fun requestRuntimePermission(): Boolean {
         if (ActivityCompat.checkSelfPermission(
                 this,
-                READ_EXTERNAL_STORAGE
+                permission[0]
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(READ_EXTERNAL_STORAGE),
+                permission,
                 REQUEST_CODE_FOR_WRITE
             )
             return false
@@ -118,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             else
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(READ_EXTERNAL_STORAGE),
+                    permission,
                     REQUEST_CODE_FOR_WRITE
                 )
         }
