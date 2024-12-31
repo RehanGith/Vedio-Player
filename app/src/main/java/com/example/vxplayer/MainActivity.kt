@@ -7,11 +7,14 @@ import android.Manifest.permission.READ_MEDIA_VIDEO
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -20,7 +23,7 @@ import androidx.fragment.app.Fragment
 import com.example.vxplayer.databinding.ActivityMainBinding
 import java.io.File
 
-const val REQUEST_CODE_FOR_WRITE = 17
+const val REQUEST_CODE_FOR_READ = 17
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -35,15 +38,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setTheme(R.style.coolNavTheme)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        permission = if(android.os.Build.VERSION.SDK_INT >= 33) {
+        permission = if(Build.VERSION.SDK_INT >= 33) {
             arrayOf(READ_MEDIA_VIDEO, READ_MEDIA_IMAGES, READ_MEDIA_AUDIO)
 
         } else {
             arrayOf(READ_EXTERNAL_STORAGE)
         }
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         if (requestRuntimePermission()) {
-            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Permission Granted: Main Activity", Toast.LENGTH_SHORT).show()
             folderList = ArrayList()
             videoLIst = getAllVideos()
             setFragment(VideosFragment())
@@ -99,20 +102,40 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+
+
     private fun requestRuntimePermission(): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                permission[0]
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        val check = checkPar()
+        if (!check) {
             ActivityCompat.requestPermissions(
                 this,
                 permission,
-                REQUEST_CODE_FOR_WRITE
+                REQUEST_CODE_FOR_READ
             )
+            Log.i("Permission", "requestRuntimePermission")
             return false
         }
         return true
+    }
+    private fun checkPar(): Boolean {
+        Log.i("Permission", "checkPar")
+        if(permission.size > 1) {
+            val recVi = ActivityCompat.checkSelfPermission(this, READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+            val recIm = ActivityCompat.checkSelfPermission(this, READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
+            val recAu = ActivityCompat.checkSelfPermission(this, READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+            Log.i("Permission", "checkPar: $recVi $recIm $recAu")
+            return recIm && recVi && recAu
+        }else {
+            Log.i("Permission", "checkPar: 1")
+            return ActivityCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+    private fun checkResult(grantResults: IntArray): Boolean {
+        if(grantResults.size >= 2) {
+            return grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED
+        } else {
+            return grantResults[0] == PackageManager.PERMISSION_GRANTED
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -122,14 +145,16 @@ class MainActivity : AppCompatActivity() {
         deviceId: Int
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId)
-        if (requestCode == REQUEST_CODE_FOR_WRITE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        Log.i("Permission", "onRequestPermissionsResult")
+        if (requestCode == REQUEST_CODE_FOR_READ) {
+            Log.i("Permission", "onRequestPermissionsResult: request code")
+            if (checkResult(grantResults))
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
             else
                 ActivityCompat.requestPermissions(
                     this,
                     permission,
-                    REQUEST_CODE_FOR_WRITE
+                    REQUEST_CODE_FOR_READ
                 )
         }
     }
